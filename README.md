@@ -7,7 +7,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/JobBrander/jobs-dice.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-dice)
 [![Total Downloads](https://img.shields.io/packagist/dt/jobbrander/jobs-dice.svg?style=flat-square)](https://packagist.org/packages/jobbrander/jobs-dice)
 
-This package provides Indeed Jobs API support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
+This package provides Dice Jobs API support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
 
 ## Installation
 
