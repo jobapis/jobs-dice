@@ -1,6 +1,23 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 0.2.1 - 2015-06-07
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Fixed tests for latest common version with Guzzle 6.0
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.2.0 - 2015-05-02
 
 ### Added
