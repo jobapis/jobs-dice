@@ -5,6 +5,10 @@ use Mockery as m;
 
 class DiceTest extends \PHPUnit_Framework_TestCase
 {
+    private $clientClass = 'JobBrander\Jobs\Client\Providers\AbstractProvider';
+    private $collectionClass = 'JobBrander\Jobs\Client\Collection';
+    private $jobClass = 'JobBrander\Jobs\Client\Job';
+
     public function setUp()
     {
         $this->client = new Dice();
@@ -146,6 +150,38 @@ class DiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($payload['detailUrl'], $results->url);
     }
 
+    public function testItCanConnect()
+    {
+        $provider = $this->getProviderAttributes();
+
+        for ($i = 0; $i < $provider['jobs_count']; $i++) {
+            $payload['resultItemList'][] = $this->createJobArray();
+        }
+
+        $responseBody = json_encode($payload);
+
+        $job = m::mock($this->jobClass);
+        $job->shouldReceive('setQuery')->with($provider['keyword'])
+            ->times($provider['jobs_count'])->andReturnSelf();
+        $job->shouldReceive('setSource')->with($provider['source'])
+            ->times($provider['jobs_count'])->andReturnSelf();
+
+        $response = m::mock('GuzzleHttp\Message\Response');
+        $response->shouldReceive('getBody')->once()->andReturn($responseBody);
+
+        $http = m::mock('GuzzleHttp\Client');
+        $http->shouldReceive(strtolower($this->client->getVerb()))
+            ->with($this->client->getUrl(), $this->client->getHttpClientOptions())
+            ->once()
+            ->andReturn($response);
+        $this->client->setClient($http);
+
+        $results = $this->client->getJobs();
+
+        $this->assertInstanceOf($this->collectionClass, $results);
+        $this->assertCount($provider['jobs_count'], $results);
+    }
+
     private function createJobArray($num = 10) {
         return [
             'jobTitle' => uniqid(),
@@ -154,5 +190,19 @@ class DiceTest extends \PHPUnit_Framework_TestCase
             'date' => uniqid(),
             'detailUrl' => uniqid(),
         ];
+    }
+
+    private function getProviderAttributes($attributes = [])
+    {
+        $defaults = [
+            'path' => uniqid(),
+            'format' => 'json',
+            'keyword' => uniqid(),
+            'source' => uniqid(),
+            'params' => [uniqid()],
+            'jobs_count' => rand(2,10),
+
+        ];
+        return array_replace($defaults, $attributes);
     }
 }
