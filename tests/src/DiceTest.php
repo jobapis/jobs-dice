@@ -186,8 +186,8 @@ class DiceTest extends \PHPUnit_Framework_TestCase
         return [
             'jobTitle' => uniqid(),
             'company' => uniqid(),
-            'location' => uniqid(),
-            'date' => uniqid(),
+            'location' => uniqid().', '.uniqid(),
+            'date' => '2015-07-'.rand(1,31),
             'detailUrl' => uniqid(),
         ];
     }

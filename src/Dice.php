@@ -13,16 +13,34 @@ class Dice extends AbstractProvider
      */
     public function createJobObject($payload)
     {
-        $defaults = ['jobTitle', 'company', 'location', 'date', 'detailUrl'];
+        $defaults = [
+            'jobTitle',
+            'company',
+            'location',
+            'date',
+            'detailUrl'
+        ];
 
         $payload = static::parseAttributeDefaults($payload, $defaults);
 
         $job = new Job([
             'title' => $payload['jobTitle'],
+            'name' => $payload['jobTitle'],
             'url' => $payload['detailUrl'],
-            'company' => $payload['company'],
             'location' => $payload['location'],
         ]);
+
+        $location = $this->parseLocation($payload['location']);
+
+        $job->setCompany($payload['company'])
+            ->setDatePostedAsString($payload['date']);
+
+        if (isset($location[0])) {
+            $job->setCity($location[0]);
+        }
+        if (isset($location[1])) {
+            $job->setState($location[1]);
+        }
 
         return $job;
     }
@@ -104,5 +122,15 @@ class Dice extends AbstractProvider
     public function getVerb()
     {
         return 'GET';
+    }
+
+    /**
+     * Parse city and state from string given by API
+     *
+     * @return array
+     */
+    public function parseLocation($location)
+    {
+        return explode(', ', $location);
     }
 }

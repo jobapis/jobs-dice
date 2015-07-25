@@ -1,6 +1,25 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 0.2.3 - 2015-07-25
+
+### Added
+- DatePosted field from response date
+- Support for setCompany helper method
+- Support for city and state location methods
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.2.2 - 2015-07-04
 
 ### Added
