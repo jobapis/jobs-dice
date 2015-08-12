@@ -1,6 +1,23 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 0.2.4 - 2015-08-12
+
+### Added
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Updated to v1.0.3 of jobs-common
+
+### Removed
+- getParameters and parseLocation methods
+
+### Security
+- Nothing
+
 ## 0.2.3 - 2015-07-25
 
 ### Added

@@ -30,7 +30,7 @@ class Dice extends AbstractProvider
             'location' => $payload['location'],
         ]);
 
-        $location = $this->parseLocation($payload['location']);
+        $location = static::parseLocation($payload['location']);
 
         $job->setCompany($payload['company'])
             ->setDatePostedAsString($payload['date']);
@@ -63,16 +63,6 @@ class Dice extends AbstractProvider
     public function getListingsPath()
     {
         return 'resultItemList';
-    }
-
-    /**
-     * Get parameters
-     *
-     * @return  array
-     */
-    public function getParameters()
-    {
-        return [];
     }
 
     /**
@@ -122,15 +112,5 @@ class Dice extends AbstractProvider
     public function getVerb()
     {
         return 'GET';
-    }
-
-    /**
-     * Parse city and state from string given by API
-     *
-     * @return array
-     */
-    public function parseLocation($location)
-    {
-        return explode(', ', $location);
     }
 }
