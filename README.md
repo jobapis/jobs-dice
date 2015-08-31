@@ -7,7 +7,8 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/JobBrander/jobs-dice.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-dice)
 [![Total Downloads](https://img.shields.io/packagist/dt/jobbrander/jobs-dice.svg?style=flat-square)](https://packagist.org/packages/jobbrander/jobs-dice)
 
-This package provides Dice Jobs API support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
+This package provides [Dice Jobs API](http://www.dice.com/common/content/util/apidoc/jobsearch.html)
+support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
 
 ## Installation
 
@@ -25,10 +26,10 @@ Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\
 $client = new JobBrander\Jobs\Client\Provider\Dice();
 
 // Search for 200 job listings for 'project manager' in Chicago, IL
-$jobs = $client->setKeyword('project manager')
-    ->setCity('Chicago')
-    ->setState('IL')
-    ->setCount(200)
+$jobs = $client->setKeyword('project manager') // The search text/keywords for the jobs entire body
+    ->setCity('Chicago')    // The job's United States Post Office ZipCode of the city is the center with a 40 mile search radius
+    ->setState('IL')        // Specify the job's United States Post Office state code
+    ->setCount(200)         // Specify the number of results per page
     ->getJobs();
 ```
 
