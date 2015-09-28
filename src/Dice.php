@@ -5,6 +5,79 @@ use JobBrander\Jobs\Client\Job;
 class Dice extends AbstractProvider
 {
     /**
+     * Map of setter methods to query parameters
+     *
+     * @var array
+     */
+    protected $queryMap = [
+        'setAge' => 'age',
+        'setAreacode' => 'areacode',
+        'setCity' => 'city',
+        'setCount' => 'pgcnt',
+        'setCountry' => 'country',
+        'setDiceid' => 'diceid',
+        'setDirect' => 'direct',
+        'setIp' => 'ip',
+        'setKeyword' => 'text',
+        'setPage' => 'page',
+        'setPgcnt' => 'pgcnt',
+        'setSd' => 'sd',
+        'setSkill' => 'skill',
+        'setSort' => 'sort',
+        'setState' => 'state',
+        'setText' => 'text',
+    ];
+
+    /**
+     * Current api query parameters
+     *
+     * @var array
+     */
+    protected $queryParams = [
+        'age' => null,
+        'areacode' => null,
+        'city' => null,
+        'country' => null,
+        'diceid' => null,
+        'direct' => null,
+        'ip' => null,
+        'page' => null,
+        'pgcnt' => null,
+        'sd' => null,
+        'skill' => null,
+        'sort' => null,
+        'state' => null,
+        'text' => null,
+    ];
+
+    /**
+     * Create new Dice jobs client.
+     *
+     * @param array $parameters
+     */
+    public function __construct($parameters = [])
+    {
+        parent::__construct($parameters);
+        array_walk($parameters, [$this, 'updateQuery']);
+    }
+
+    /**
+     * Magic method to handle get and set methods for properties
+     *
+     * @param  string $method
+     * @param  array  $parameters
+     *
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        if (isset($this->queryMap[$method], $parameters[0])) {
+            $this->updateQuery($parameters[0], $this->queryMap[$method]);
+        }
+        return parent::__call($method, $parameters);
+    }
+
+    /**
      * Returns the standardized job object
      *
      * @param array $payload
@@ -72,24 +145,7 @@ class Dice extends AbstractProvider
      */
     public function getQueryString()
     {
-        $query_params = [
-            'text' => 'getKeyword',
-            'state' => 'getState',
-            'city' => 'getCity',
-            'page' => 'getPage',
-            'pgcnt' => 'getCount',
-        ];
-
-        $query_string = [];
-
-        array_walk($query_params, function ($value, $key) use (&$query_string) {
-            $computed_value = $this->$value();
-            if (!is_null($computed_value)) {
-                $query_string[$key] = $computed_value;
-            }
-        });
-
-        return http_build_query($query_string);
+        return http_build_query($this->queryParams);
     }
 
     /**
@@ -112,5 +168,21 @@ class Dice extends AbstractProvider
     public function getVerb()
     {
         return 'GET';
+    }
+
+    /**
+     * Attempts to update current query parameters.
+     *
+     * @param  string  $value
+     * @param  string  $key
+     *
+     * @return Careerbuilder
+     */
+    protected function updateQuery($value, $key)
+    {
+        if (array_key_exists($key, $this->queryParams)) {
+            $this->queryParams[$key] = $value;
+        }
+        return $this;
     }
 }

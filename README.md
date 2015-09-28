@@ -25,10 +25,24 @@ Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\
 ```php
 $client = new JobBrander\Jobs\Client\Provider\Dice();
 
-// Search for 200 job listings for 'project manager' in Chicago, IL
-$jobs = $client->setKeyword('project manager') // The search text/keywords for the jobs entire body
-    ->setCity('Chicago')    // The job's United States Post Office ZipCode of the city is the center with a 40 mile search radius
-    ->setState('IL')        // Specify the job's United States Post Office state code
+$jobs = $client
+    // API parameters
+    ->setDirect()    //  (optional) if the value of this parameter is "1" then jobs returned will be direct hire
+    ->setAreacode()    //  (optional) specify the jobs area code
+    ->setCountry()    //  (optional) specify the jobs ISO 3166 country code
+    ->setState()    //  (optional) specify the jobs United States Post Office state code
+    ->setSkill()    //  (optional) specify search text for the jobs skill property
+    ->setCity()    //  (optional) specify the jobs United States Post Office ZipCode as the center of 40 mile radius
+    ->setText()    //  (optional) specify search text for the jobs entire body
+    ->setIp()    //  (optional) specify an IP address that will be used to look up a geocode which will be used in the search
+    ->setAge()    //  (optional) specify a posting age (a.k.a. days back)
+    ->setDiceid()    //  (optional) specify a Dice customer ID to find only jobs from that company
+    ->setPage()    //  (optional) specify a page number of the results to be displayed (1 based)
+    ->setPgcnt()    //  (optional) specify the number of results per page
+    ->setSort()    //  (optional) specify a sort paremeter; sort=1 sorts by posted age, sort=2 sorts by job title, sort=3 sorts by company, sort=4 sorts by location
+    ->setSd()    //  (optional) sort direction; sd=a sort order is ASCENDING sd=d sort order is DESCENDING
+    // JobBrander parameters
+    ->setKeyword('project manager') // The search text/keywords for the jobs entire body
     ->setCount(200)         // Specify the number of results per page
     ->getJobs();
 ```
