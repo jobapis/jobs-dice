@@ -10,20 +10,22 @@ class Dice extends AbstractProvider
      * @var array
      */
     protected $queryMap = [
-        'setDirect' => 'direct',
-        'setAreacode' => 'areacode',
-        'setCountry' => 'country',
-        'setState' => 'state',
-        'setSkill' => 'skill',
-        'setCity' => 'city',
-        'setText' => 'text',
-        'setIp' => 'ip',
         'setAge' => 'age',
+        'setAreacode' => 'areacode',
+        'setCity' => 'city',
+        'setCount' => 'pgcnt',
+        'setCountry' => 'country',
         'setDiceid' => 'diceid',
+        'setDirect' => 'direct',
+        'setIp' => 'ip',
+        'setKeyword' => 'text',
         'setPage' => 'page',
         'setPgcnt' => 'pgcnt',
-        'setSort' => 'sort',
         'setSd' => 'sd',
+        'setSkill' => 'skill',
+        'setSort' => 'sort',
+        'setState' => 'state',
+        'setText' => 'text',
     ];
 
     /**
@@ -32,20 +34,20 @@ class Dice extends AbstractProvider
      * @var array
      */
     protected $queryParams = [
-        'direct' => null,
-        'areacode' => null,
-        'country' => null,
-        'state' => null,
-        'skill' => null,
-        'city' => null,
-        'text' => null,
-        'ip' => null,
         'age' => null,
+        'areacode' => null,
+        'city' => null,
+        'country' => null,
         'diceid' => null,
+        'direct' => null,
+        'ip' => null,
         'page' => null,
         'pgcnt' => null,
-        'sort' => null,
         'sd' => null,
+        'skill' => null,
+        'sort' => null,
+        'state' => null,
+        'text' => null,
     ];
 
     /**
