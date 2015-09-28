@@ -1,12 +1,11 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
-## X.X.0 - 2015-09-28
+## 0.3.0 - 2015-09-28
 
 ### Added
 - Support for all setter methods outlined in the [Dice API](http://www.dice.com/common/content/util/apidoc/jobsearch.html)
 - Readme documentation for all supported methods
-- Tests to support all new methods
 
 ### Deprecated
 - Nothing
