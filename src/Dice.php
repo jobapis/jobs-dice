@@ -5,6 +5,13 @@ use JobBrander\Jobs\Client\Job;
 class Dice extends AbstractProvider
 {
     /**
+     * Base API Url
+     *
+     * @var string
+     */
+    protected $baseUrl = 'http://service.dice.com/api/rest/jobsearch/v1/simple.json?';
+
+    /**
      * Map of setter methods to query parameters
      *
      * @var array
@@ -49,33 +56,6 @@ class Dice extends AbstractProvider
         'state' => null,
         'text' => null,
     ];
-
-    /**
-     * Create new Dice jobs client.
-     *
-     * @param array $parameters
-     */
-    public function __construct($parameters = [])
-    {
-        parent::__construct($parameters);
-        array_walk($parameters, [$this, 'updateQuery']);
-    }
-
-    /**
-     * Magic method to handle get and set methods for properties
-     *
-     * @param  string $method
-     * @param  array  $parameters
-     *
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        if (isset($this->queryMap[$method], $parameters[0])) {
-            $this->updateQuery($parameters[0], $this->queryMap[$method]);
-        }
-        return parent::__call($method, $parameters);
-    }
 
     /**
      * Returns the standardized job object
@@ -129,6 +109,16 @@ class Dice extends AbstractProvider
     }
 
     /**
+     * Get keyword for search query
+     *
+     * @return string Should return the value of the parameter describing this query
+     */
+    public function getKeyword()
+    {
+        return $this->queryParams['text'];
+    }
+
+    /**
      * Get listings path
      *
      * @return  string
@@ -146,18 +136,6 @@ class Dice extends AbstractProvider
     public function getQueryString()
     {
         return http_build_query($this->queryParams);
-    }
-
-    /**
-     * Get url
-     *
-     * @return  string
-     */
-    public function getUrl()
-    {
-        $query_string = $this->getQueryString();
-
-        return 'http://service.dice.com/api/rest/jobsearch/v1/simple.json?'.$query_string;
     }
 
     /**

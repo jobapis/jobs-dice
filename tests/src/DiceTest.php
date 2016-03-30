@@ -11,7 +11,7 @@ class DiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = new Dice();
+        $this->client = new Dice(['keyword'=>'engineering']);
     }
 
     public function testItWillUseJsonFormat()
@@ -33,14 +33,6 @@ class DiceTest extends \PHPUnit_Framework_TestCase
         $path = $this->client->getListingsPath();
 
         $this->assertEquals('resultItemList', $path);
-    }
-
-    public function testItWillProvideEmptyParameters()
-    {
-        $parameters = $this->client->getParameters();
-
-        $this->assertEmpty($parameters);
-        $this->assertTrue(is_array($parameters));
     }
 
     public function testUrlIncludesKeywordWhenProvided()
@@ -180,6 +172,22 @@ class DiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf($this->collectionClass, $results);
         $this->assertCount($provider['jobs_count'], $results);
+    }
+
+    public function testItCanRetreiveResults()
+    {
+        if (!getenv('LIVE')) {
+            $this->markTestSkipped('LIVE variable not set. Real API call will not be made.');
+        }
+
+        $keyword = 'engineering';
+        $this->client->setKeyword($keyword);
+        $results = $this->client->getJobs();
+
+        $this->assertInstanceOf($this->collectionClass, $results);
+        foreach($results as $job) {
+            $this->assertEquals($keyword, $job->query);
+        }
     }
 
     private function createJobArray($num = 10) {
