@@ -20,7 +20,7 @@ composer require jobbrander/jobs-dice
 
 ## Usage
 
-Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\Provider\Dice` as the provider.
+Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\Providers\Dice` as the provider.
 
 ```php
 $client = new JobBrander\Jobs\Client\Provider\Dice();
