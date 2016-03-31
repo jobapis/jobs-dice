@@ -17,22 +17,8 @@ class Dice extends AbstractProvider
      * @var array
      */
     protected $queryMap = [
-        'setAge' => 'age',
-        'setAreacode' => 'areacode',
-        'setCity' => 'city',
-        'setCount' => 'pgcnt',
-        'setCountry' => 'country',
-        'setDiceid' => 'diceid',
-        'setDirect' => 'direct',
-        'setIp' => 'ip',
         'setKeyword' => 'text',
-        'setPage' => 'page',
-        'setPgcnt' => 'pgcnt',
-        'setSd' => 'sd',
-        'setSkill' => 'skill',
-        'setSort' => 'sort',
-        'setState' => 'state',
-        'setText' => 'text',
+        'setCount' => 'pgcnt',
     ];
 
     /**

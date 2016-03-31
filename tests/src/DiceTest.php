@@ -35,6 +35,28 @@ class DiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('resultItemList', $path);
     }
 
+    public function testItCanAddArbitraryAttribute()
+    {
+        $attribute = uniqid();
+
+        $this->client->setArbitraryAttribute($attribute);
+        
+        $value = $this->client->getArbitraryAttribute();
+        
+        $this->assertEquals($attribute, $value);
+    }
+
+    public function testItCanAddCountAttribute()
+    {
+        $attribute = rand()*10;
+
+        $this->client->setCount($attribute);
+        
+        $value = $this->client->getPgcnt();
+        
+        $this->assertEquals($attribute, $value);
+    }
+
     public function testUrlIncludesKeywordWhenProvided()
     {
         $keyword = uniqid().' '.uniqid();
