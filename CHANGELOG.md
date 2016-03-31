@@ -1,6 +1,23 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 0.4.0 - 2016-03-31
+
+### Added
+- Support for v2 of the jobs-common package
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.0 - 2015-09-28
 
 ### Added
