@@ -115,16 +115,6 @@ class Dice extends AbstractProvider
     }
 
     /**
-     * Get query string for client based on properties
-     *
-     * @return string
-     */
-    public function getQueryString()
-    {
-        return http_build_query($this->queryParams);
-    }
-
-    /**
      * Get http verb
      *
      * @return  string
@@ -132,21 +122,5 @@ class Dice extends AbstractProvider
     public function getVerb()
     {
         return 'GET';
-    }
-
-    /**
-     * Attempts to update current query parameters.
-     *
-     * @param  string  $value
-     * @param  string  $key
-     *
-     * @return Careerbuilder
-     */
-    protected function updateQuery($value, $key)
-    {
-        if (array_key_exists($key, $this->queryParams)) {
-            $this->queryParams[$key] = $value;
-        }
-        return $this;
     }
 }
