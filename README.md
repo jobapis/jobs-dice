@@ -58,7 +58,7 @@ $ ./vendor/bin/phpunit
 
 To run all tests including actual API calls
 ``` bash
-$ ./vendor/bin/phpunit
+$ LIVE=true ./vendor/bin/phpunit
 ```
 
 ## Contributing
