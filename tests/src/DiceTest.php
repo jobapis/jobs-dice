@@ -35,13 +35,13 @@ class DiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('resultItemList', $path);
     }
 
-    public function testItCanAddArbitraryAttribute()
+    public function testItCanAddDirectAttribute()
     {
         $attribute = uniqid();
 
-        $this->client->setArbitraryAttribute($attribute);
+        $this->client->setDirect($attribute);
         
-        $value = $this->client->getArbitraryAttribute();
+        $value = $this->client->queryParams['direct'];
         
         $this->assertEquals($attribute, $value);
     }
