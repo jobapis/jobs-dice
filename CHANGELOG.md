@@ -1,6 +1,24 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 1.0.0 - 2016-03-31
+
+### Added
+- New namespace.
+- Support for v2 beta of jobs-common package
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.4.0 - 2016-03-31
 
 ### Added
