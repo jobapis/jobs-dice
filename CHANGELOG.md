@@ -1,11 +1,11 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
-## 1.0.0 - 2016-03-31
+## 1.0.0-beta - 2016-09-02
 
 ### Added
-- New namespace.
-- Support for v2 beta of jobs-common package
+- Changed namespace and organization to `jobapis`.
+- Support for v2 of jobs-common package.
 
 ### Deprecated
 - Nothing
@@ -14,7 +14,7 @@ All Notable changes to `jobs-dice` will be documented in this file
 - Nothing
 
 ### Removed
-- Nothing
+- Old getters and setters.
 
 ### Security
 - Nothing
