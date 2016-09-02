@@ -1,218 +1,122 @@
 <?php namespace JobBrander\Jobs\Client\Providers\Test;
 
-use JobBrander\Jobs\Client\Providers\Dice;
+use JobApis\Jobs\Client\Collection;
+use JobApis\Jobs\Client\Job;
+use JobApis\Jobs\Client\Providers\DiceProvider;
+use JobApis\Jobs\Client\Queries\DiceQuery;
 use Mockery as m;
 
-class DiceTest extends \PHPUnit_Framework_TestCase
+class GovtProviderTest extends \PHPUnit_Framework_TestCase
 {
-    private $clientClass = 'JobBrander\Jobs\Client\Providers\AbstractProvider';
-    private $collectionClass = 'JobBrander\Jobs\Client\Collection';
-    private $jobClass = 'JobBrander\Jobs\Client\Job';
-
     public function setUp()
     {
-        $this->client = new Dice(['keyword'=>'engineering']);
+        $this->query = m::mock('JobApis\Jobs\Client\Queries\DiceQuery');
+
+        $this->client = new DiceProvider($this->query);
     }
 
-    public function testItWillUseJsonFormat()
+    public function testItCanGetDefaultResponseFields()
     {
-        $format = $this->client->getFormat();
-
-        $this->assertEquals('json', $format);
+        $fields = [
+            'jobTitle',
+            'company',
+            'location',
+            'date',
+            'detailUrl',
+        ];
+        $this->assertEquals($fields, $this->client->getDefaultResponseFields());
     }
 
-    public function testItWillUseGetHttpVerb()
+    public function testItCanGetListingsPath()
     {
-        $verb = $this->client->getVerb();
-
-        $this->assertEquals('GET', $verb);
+        $this->assertEquals('resultItemList', $this->client->getListingsPath());
     }
 
-    public function testListingPath()
-    {
-        $path = $this->client->getListingsPath();
-
-        $this->assertEquals('resultItemList', $path);
-    }
-
-    public function testItCanAddDirectAttribute()
-    {
-        $attribute = uniqid();
-
-        $this->client->setDirect($attribute);
-        
-        $value = $this->client->queryParams['direct'];
-        
-        $this->assertEquals($attribute, $value);
-    }
-
-    public function testItCanAddCountAttribute()
-    {
-        $attribute = rand()*10;
-
-        $this->client->setCount($attribute);
-        
-        $value = $this->client->getPgcnt();
-        
-        $this->assertEquals($attribute, $value);
-    }
-
-    public function testUrlIncludesKeywordWhenProvided()
-    {
-        $keyword = uniqid().' '.uniqid();
-        $param = 'text='.urlencode($keyword);
-
-        $url = $this->client->setKeyword($keyword)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlNotIncludesKeywordWhenNotProvided()
-    {
-        $param = 'text=';
-
-        $url = $this->client->getUrl();
-
-        $this->assertNotContains($param, $url);
-    }
-
-    public function testUrlIncludesCityWhenCityProvided()
-    {
-        $city = uniqid();
-        $param = 'city='.urlencode($city);
-
-        $url = $this->client->setCity($city)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlIncludesStateWhenStateProvided()
-    {
-        $state = uniqid();
-        $param = 'state='.urlencode($state);
-
-        $url = $this->client->setState($state)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlNotIncludesCityWhenNotProvided()
-    {
-        $param = 'city=';
-
-        $url = $this->client->getUrl();
-
-        $this->assertNotContains($param, $url);
-    }
-
-    public function testUrlNotIncludesStateWhenNotProvided()
-    {
-        $param = 'state=';
-
-        $url = $this->client->getUrl();
-
-        $this->assertNotContains($param, $url);
-    }
-
-    public function testUrlIncludesPageWhenProvided()
-    {
-        $page = uniqid();
-        $param = 'page='.$page;
-
-        $url = $this->client->setPage($page)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlNotIncludesPageWhenNotProvided()
-    {
-        $param = 'page=';
-
-        $url = $this->client->setPage(null)->getUrl();
-
-        $this->assertNotContains($param, $url);
-    }
-
-    public function testUrlIncludesCountWhenProvided()
-    {
-        $count = uniqid();
-        $param = 'pgcnt='.$count;
-
-        $url = $this->client->setCount($count)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlNotIncludesStartWhenNotProvided()
-    {
-        $param = 'pgcnt=';
-
-        $url = $this->client->setCount(null)->getUrl();
-
-        $this->assertNotContains($param, $url);
-    }
-
-    public function testItCanCreateJobFromPayload()
+    public function testItCanCreateJobObjectFromPayload()
     {
         $payload = $this->createJobArray();
 
         $results = $this->client->createJobObject($payload);
 
+        $this->assertInstanceOf(Job::class, $results);
         $this->assertEquals($payload['jobTitle'], $results->title);
         $this->assertEquals($payload['company'], $results->company);
         $this->assertEquals($payload['location'], $results->location);
         $this->assertEquals($payload['detailUrl'], $results->url);
     }
 
-    public function testItCanConnect()
+    /**
+     * Integration test for the client's getJobs() method.
+     */
+    public function testItCanGetJobs()
     {
-        $provider = $this->getProviderAttributes();
+        $options = [
+            'text' => uniqid(),
+            'areacode' => uniqid(),
+            'pgcnt' => uniqid(),
+        ];
 
-        for ($i = 0; $i < $provider['jobs_count']; $i++) {
-            $payload['resultItemList'][] = $this->createJobArray();
-        }
+        $guzzle = m::mock('GuzzleHttp\Client');
 
-        $responseBody = json_encode($payload);
+        $query = new DiceQuery($options);
 
-        $job = m::mock($this->jobClass);
-        $job->shouldReceive('setQuery')->with($provider['keyword'])
-            ->times($provider['jobs_count'])->andReturnSelf();
-        $job->shouldReceive('setSource')->with($provider['source'])
-            ->times($provider['jobs_count'])->andReturnSelf();
+        $client = new DiceProvider($query);
+
+        $client->setClient($guzzle);
 
         $response = m::mock('GuzzleHttp\Message\Response');
-        $response->shouldReceive('getBody')->once()->andReturn($responseBody);
 
-        $http = m::mock('GuzzleHttp\Client');
-        $http->shouldReceive(strtolower($this->client->getVerb()))
-            ->with($this->client->getUrl(), $this->client->getHttpClientOptions())
+        $jobObjects = [
+            (object) $this->createJobArray(),
+            (object) $this->createJobArray(),
+            (object) $this->createJobArray(),
+        ];
+
+        $jobs = json_encode((object) [
+            'resultItemList' => $jobObjects
+        ]);
+
+        $guzzle->shouldReceive('get')
+            ->with($query->getUrl(), [])
             ->once()
             ->andReturn($response);
-        $this->client->setClient($http);
+        $response->shouldReceive('getBody')
+            ->once()
+            ->andReturn($jobs);
 
-        $results = $this->client->getJobs();
+        $results = $client->getJobs();
 
-        $this->assertInstanceOf($this->collectionClass, $results);
-        $this->assertCount($provider['jobs_count'], $results);
+        $this->assertInstanceOf(Collection::class, $results);
+        $this->assertCount(count($jobObjects), $results);
     }
 
-    public function testItCanRetreiveResults()
+    /**
+     * Integration test with actual API call to the provider.
+     */
+    public function testItCanGetJobsFromApi()
     {
-        if (!getenv('LIVE')) {
-            $this->markTestSkipped('LIVE variable not set. Real API call will not be made.');
+        if (!getenv('REAL_CALL')) {
+            $this->markTestSkipped('REAL_CALL not set. Real API call will not be made.');
         }
 
         $keyword = 'engineering';
-        $this->client->setKeyword($keyword);
-        $results = $this->client->getJobs();
 
-        $this->assertInstanceOf($this->collectionClass, $results);
+        $query = new DiceQuery([
+            'text' => $keyword,
+        ]);
+
+        $client = new DiceProvider($query);
+
+        $results = $client->getJobs();
+
+        $this->assertInstanceOf('JobApis\Jobs\Client\Collection', $results);
+
         foreach($results as $job) {
             $this->assertEquals($keyword, $job->query);
         }
     }
 
-    private function createJobArray($num = 10) {
+    private function createJobArray() {
         return [
             'jobTitle' => uniqid(),
             'company' => uniqid(),
@@ -220,19 +124,5 @@ class DiceTest extends \PHPUnit_Framework_TestCase
             'date' => '2015-07-'.rand(1,31),
             'detailUrl' => uniqid(),
         ];
-    }
-
-    private function getProviderAttributes($attributes = [])
-    {
-        $defaults = [
-            'path' => uniqid(),
-            'format' => 'json',
-            'keyword' => uniqid(),
-            'source' => uniqid(),
-            'params' => [uniqid()],
-            'jobs_count' => rand(2,10),
-
-        ];
-        return array_replace($defaults, $attributes);
     }
 }
