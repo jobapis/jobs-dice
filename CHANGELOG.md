@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
-## 1.0.0-beta - 2016-09-02
+## 1.0.0-alpha - 2016-09-02
 
 ### Added
 - Changed namespace and organization to `jobapis`.
