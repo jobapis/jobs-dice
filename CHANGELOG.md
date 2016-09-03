@@ -1,6 +1,49 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 1.0.0 - 2016-09-03
+
+### Added
+- Updated composer package name
+
+### Fixed
+- Tests namespace.
+
+## 1.0.0-alpha - 2016-09-02
+
+### Added
+- Changed namespace and organization to `jobapis`.
+- Support for v2 of jobs-common package.
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Old getters and setters.
+
+### Security
+- Nothing
+
+## 0.4.0 - 2016-03-31
+
+### Added
+- Support for v2 of the jobs-common package
+
+### Deprecated
+- Nothing
+
+### Fixed
+- Nothing
+
+### Removed
+- Nothing
+
+### Security
+- Nothing
+
 ## 0.3.0 - 2015-09-28
 
 ### Added
