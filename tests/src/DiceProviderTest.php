@@ -1,4 +1,4 @@
-<?php namespace JobBrander\Jobs\Client\Providers\Test;
+<?php namespace JobBrander\Jobs\Client\Test;
 
 use JobApis\Jobs\Client\Collection;
 use JobApis\Jobs\Client\Job;

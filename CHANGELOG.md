@@ -1,6 +1,14 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 1.0.0 - 2016-09-03
+
+### Added
+- Updated composer package name
+
+### Fixed
+- Tests namespace.
+
 ## 1.0.0-alpha - 2016-09-02
 
 ### Added

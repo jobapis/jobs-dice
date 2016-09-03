@@ -1,4 +1,4 @@
-<?php namespace JobApis\Jobs\Client\Providers\Test;
+<?php namespace JobApis\Jobs\Client\Test;
 
 use JobApis\Jobs\Client\Queries\DiceQuery;
 use Mockery as m;
