@@ -1,6 +1,11 @@
 # Changelog
 All Notable changes to `jobs-dice` will be documented in this file
 
+## 1.0.1 - 2016-09-07
+
+### Fixed
+- Tests class names.
+
 ## 1.0.0 - 2016-09-03
 
 ### Added
