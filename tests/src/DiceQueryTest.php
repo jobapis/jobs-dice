@@ -3,7 +3,7 @@
 use JobApis\Jobs\Client\Queries\DiceQuery;
 use Mockery as m;
 
-class GovtQueryTest extends \PHPUnit_Framework_TestCase
+class DiceQueryTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
