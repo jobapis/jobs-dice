@@ -7,8 +7,12 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/jobapis/jobs-dice.svg?style=flat-square)](https://scrutinizer-ci.com/g/jobapis/jobs-dice)
 [![Total Downloads](https://img.shields.io/packagist/dt/jobapis/jobs-dice.svg?style=flat-square)](https://packagist.org/packages/jobapis/jobs-dice)
 
-This package provides [Dice Jobs API](http://www.dice.com/common/content/util/apidoc/jobsearch.html)
-support for the JobBrander's [Jobs Client](https://github.com/jobapis/jobs-common).
+DEPRECATION NOTICE: As of [October, 2017 the Dice Jobs API has been shut down](https://github.com/jobapis/jobs-dice/issues/8). Dice has given me no reason for this, but there's nothing I can do about it. This library no longer works, and everything outlined below is just here for history's sake.
+
+To contact Dice, [please fill out this form on their website](http://techhub.dice.com/Dice_General-ContactUs_D.html).
+
+~~This package provides [Dice Jobs API](http://www.dice.com/common/content/util/apidoc/jobsearch.html)
+support for the JobBrander's [Jobs Client](https://github.com/jobapis/jobs-common).~~
 
 ## Installation
 
